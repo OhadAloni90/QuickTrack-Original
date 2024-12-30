@@ -1,0 +1,12 @@
+<h2>Items List</h2>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<ul>
+  <li *ngFor="let item of items">
+    {{ item.name }} - {{ item.description }}
+  </li>
+</ul>
+
+<div *ngIf="!error && !items.length">
+  No items found.
+</div>

@@ -1,0 +1,14 @@
+<h2>User Settings</h2>
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+
+<div *ngIf="settings">
+  <p>Theme: {{ settings.theme }}</p>
+  <p>Notifications: {{ settings.notifications }}</p>
+  <!-- etc. -->
+</div>
+
+<div *ngIf="!error && !settings">
+  Loading...
+</div>
