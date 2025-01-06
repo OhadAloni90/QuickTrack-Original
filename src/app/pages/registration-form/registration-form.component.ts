@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -8,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class RegistrationFormComponent implements OnInit {
   email: string = '';
   password: string = '';
-  constructor() { }
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
+  user = { username: '', email: '', password: '' };
+  constructor(private api: ApiService) {}
 
   ngOnInit() {
   }
@@ -17,4 +21,16 @@ export class RegistrationFormComponent implements OnInit {
     // In a real scenario, you'd call your ApiService here
   }
 
+  onRegister() {
+    this.api.register(this.user).subscribe({
+      next: (resp) => {
+        this.successMessage = 'User registered successfully';
+        this.errorMessage = null;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.error || 'Registration failed';
+        this.successMessage = null;
+      }
+    });
+  }
 }

@@ -10,10 +10,9 @@ let db: Db;
  */
 export async function connectToDatabase(): Promise<Db> {
   const { uri, dbName } = getDatabaseConfig();
-
-  client = new MongoClient(uri);
+  console.log('Connected to MongoDB:', uri);
+  client = new MongoClient(uri as string);
   await client.connect();
-
   console.log('Connected to MongoDB:', uri);
   db = client.db(dbName);
   console.log(db)

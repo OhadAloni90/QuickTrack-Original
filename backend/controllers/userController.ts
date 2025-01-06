@@ -7,12 +7,77 @@ import { getDb } from '../config/dbConnection';
  */
 export async function getAllUsers(req: Request, res: Response) {
   try {
+    
     const db = getDb();
+    console.log(db)
     const users = await db.collection('users').find().toArray();
     res.json({ users });
   } catch (error) {
     console.error('[getAllUsers]', error);
     res.status(500).json({ error: 'Failed to fetch users' });
+  }
+}
+// GET /api/users/settings
+export async function getUserSettings(req: Request, res: Response) {
+  try {
+    // For simplicity, let's assume we fetch user #1 or from a param
+    // In real apps, you'd parse user ID from auth token or session
+    const id = req.params['id'];
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+    const db = getDb();
+    const user = await db.collection('users').findOne({ _id: new ObjectId(id) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    // Return just the settings field
+    return res.json({ settings: user['settings'] });
+  } catch (error) {
+    console.error('[getUserSettings]', error);
+    return res.status(500).json({ error: 'Failed to fetch user settings' });
+  }
+}
+
+// PUT /api/users/settings
+export async function updateUserSettings(req: Request, res: Response) {
+  try {
+    const newSettings = req.body; // { theme, notifications } etc.
+    const userId = 'someObjectId'; 
+    const db = getDb();
+    console.log(db)
+    const result = await db.collection('users').findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      { $set: { settings: newSettings } },
+      { returnDocument: 'after' }
+    );
+
+    if ( result &&  !result['value']) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({ success: true, settings:  result && result['value']['settings'] });
+  } catch (error) {
+    console.error('[updateUserSettings]', error);
+    return res.status(500).json({ error: 'Failed to update user settings' });
+  }
+}
+export async function getUserItems(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    // Validate user ID
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+    const db = getDb();
+    // Find items where ownerId === the user's _id
+    const userItems = await db.collection('items').find({
+      ownerId: new ObjectId(id)
+    }).toArray();
+    return res.json(userItems); // Return the array of items
+  } catch (error) {
+    console.error('[getUserItems]', error);
+    return res.status(500).json({ error: 'Failed to fetch user items' });
   }
 }
 

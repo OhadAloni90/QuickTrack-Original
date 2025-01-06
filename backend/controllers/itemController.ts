@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDb, seedUsers} from '../config/dbConnection';
+import { connectToDatabase, getDb, seedUsers} from '../config/dbConnection';
 
 /**
  * GET /api/items
@@ -21,10 +21,14 @@ export async function getAllItems(req: Request, res: Response) {
  * POST /api/items
  * Create a new item in the 'items' collection.
  */
+// itemController.ts
 export async function createItem(req: Request, res: Response) {
   try {
-    const newItem = req.body; // Adjust validation or sanitization as needed
+    const newItem = req.body; 
+    // e.g., { name, price, description, ownerId }
     const db = getDb();
+    // Convert the ownerId to an ObjectId if needed
+    newItem.ownerId = new ObjectId(newItem.ownerId);
     const result = await db.collection('items').insertOne(newItem);
     res.status(201).json({ success: true, itemId: result.insertedId });
   } catch (error) {
@@ -32,7 +36,6 @@ export async function createItem(req: Request, res: Response) {
     res.status(500).json({ error: 'Failed to create item' });
   }
 }
-
 /**
  * GET /api/items/:id
  * Fetch a single item by ID.
@@ -103,5 +106,28 @@ export async function deleteItem(req: Request, res: Response) {
   } catch (error) {
     console.error('[deleteItem]', error);
     return res.status(500).json({ error: 'Failed to delete item' }); // Explicit return
+  }
+  
+}
+async function seedItems() {
+  try {
+    // 1) Connect to your DB (using your existing connectToDatabase logic)
+    await connectToDatabase();
+    const db = getDb();
+    // 2) Define your 4 fake items
+    const itemsToInsert = [
+      { name: 'Test Item #1', price: 9.99, description: 'First fake item' },
+      { name: 'Test Item #2', price: 14.99, description: 'Second fake item' },
+      { name: 'Test Item #3', price: 19.99, description: 'Third fake item' },
+      { name: 'Test Item #4', price: 29.99, description: 'Fourth fake item' },
+    ];
+    // 3) Insert them all at once
+    const result = await db.collection('items').insertMany(itemsToInsert);
+    console.log(`Inserted ${result.insertedCount} items into "items" collection.`);
+    // 4) Optionally exit the process or close the DB connection
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding items:', error);
+    process.exit(1);
   }
 }

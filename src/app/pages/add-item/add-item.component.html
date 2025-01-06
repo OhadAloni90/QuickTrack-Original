@@ -1,0 +1,26 @@
+<h2>Add a New Item</h2>
+
+<div *ngIf="successMessage" style="color:green">{{ successMessage }}</div>
+<div *ngIf="errorMessage" style="color:red">{{ errorMessage }}</div>
+
+<form (ngSubmit)="onAddItem()">
+  <div>
+    <label>Name:
+      <input [(ngModel)]="newItem.name" name="name" required />
+    </label>
+  </div>
+
+  <div>
+    <label>Price:
+      <input [(ngModel)]="newItem.price" name="price" type="number" required />
+    </label>
+  </div>
+
+  <div>
+    <label>Description:
+      <input [(ngModel)]="newItem.description" name="description" />
+    </label>
+  </div>
+
+  <button type="submit">Add Item</button>
+</form>

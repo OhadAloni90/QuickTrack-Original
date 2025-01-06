@@ -7,13 +7,17 @@ import { RegistrationFormComponent } from './pages/registration-form/registratio
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './pages/login/login.component';
+import { AddItemComponent } from './pages/add-item/add-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemsListComponent,
     RegistrationFormComponent,
-    UserSettingsPanelComponent
+    UserSettingsPanelComponent,
+    LoginComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,
