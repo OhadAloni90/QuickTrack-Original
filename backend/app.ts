@@ -1,21 +1,17 @@
 const express = require('express');
-// Import example routes (placeholder)
-import * as usersRouter from './routes/users';
-import * as itemsRouter from './routes/items';
-import * as indexRouter from './routes/index'
-export const app = express();
+const cors  = require('cors');
 
-// Middleware: parse JSON body (if needed)
+const { indexRouter } = require('./routes/index');
+const { itemsRouter } = require('./routes/items');
+const { usersRouter } = require('./routes/users');
+
+const app = express();
+app.use(cors());
 app.use(express.json());
 
-// Example: serve static files (if you have a frontend build, e.g., Angular dist)
-// app.use(express.static(path.join(__dirname, '../public')));
+app.use('/', indexRouter);
+app.use('/api/items', itemsRouter);
+app.use('/api/users/', usersRouter);
 
-// Register routes
-app.use('/', indexRouter.indexRouter);
-app.use('/api/items', itemsRouter.itemsRouter);
-app.use('/api/users', usersRouter.usersRouter);
-// Fallback for unknown routes
-app.use((req: any, res: any) => {
-  res.status(404).json({ error: 'Not Found' });
-});
+module.exports = app;
+export default app;

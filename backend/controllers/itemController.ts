@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDb } from '../config/dbConnection';
+import { getDb, seedUsers} from '../config/dbConnection';
 
 /**
  * GET /api/items
@@ -40,18 +40,24 @@ export async function createItem(req: Request, res: Response) {
 export async function getItemById(req: Request, res: Response) {
   try {
     const { id } = req.params;
+
+    // Validate the ObjectId
+    if (!ObjectId.isValid(id)) {
+      console.log('Invalid ID:', id);
+      return res.status(400).json({ error: 'Invalid item ID format' });
+    }
     const db = getDb();
     const item = await db.collection('items').findOne({ _id: new ObjectId(id) });
     if (!item) {
       return res.status(404).json({ error: 'Item not found' });
     }
-    res.json({ item });
+
+    return res.json({ item });
   } catch (error) {
     console.error('[getItemById]', error);
-    res.status(500).json({ error: 'Failed to fetch item' });
+    return res.status(500).json({ error: 'Failed to fetch item' });
   }
 }
-
 /**
  * PUT /api/items/:id
  * Update an existing item by ID.
@@ -59,23 +65,23 @@ export async function getItemById(req: Request, res: Response) {
 export async function updateItem(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const updates = req.body; // Adjust validation or sanitization as needed
+    const updates = req.body;
     const db = getDb();
 
     const result = await db.collection('items').findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: updates },
-      { returnDocument: 'after' } // return the updated document
+      { returnDocument: 'after' }
     );
 
     if (!result) {
       return res.status(404).json({ error: 'Item not found' });
     }
 
-    res.json({ success: true, updatedItem: result });
+    return res.json({ success: true, updatedItem: result }); // Explicit return
   } catch (error) {
     console.error('[updateItem]', error);
-    res.status(500).json({ error: 'Failed to update item' });
+    return res.status(500).json({ error: 'Failed to update item' }); // Explicit return
   }
 }
 
@@ -93,9 +99,9 @@ export async function deleteItem(req: Request, res: Response) {
       return res.status(404).json({ error: 'Item not found' });
     }
 
-    res.json({ success: true });
+    return res.json({ success: true }); // Explicit return
   } catch (error) {
     console.error('[deleteItem]', error);
-    res.status(500).json({ error: 'Failed to delete item' });
+    return res.status(500).json({ error: 'Failed to delete item' }); // Explicit return
   }
 }

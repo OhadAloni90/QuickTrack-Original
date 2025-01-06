@@ -1,8 +1,6 @@
-import { Router, Request, Response } from 'express';
-
+import { Router } from 'express';
 export const indexRouter = Router();
 
-// Basic placeholder route
-indexRouter.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Welcome to QuickTrack API!' });
+indexRouter.get('/', (req, res) => {
+  res.send('Welcome to the API');
 });

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/dbConnection';
-
 /**
  * GET /api/users
  * Fetch all users from the 'users' collection.
@@ -39,18 +38,30 @@ export async function createUser(req: Request, res: Response) {
  */
 export async function getUserById(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    // 1) Validate the ID
+    const id = req.params['id'];
+    if (!ObjectId.isValid(id)) {
+      console.log('id',id)
+      return res.status(400).json({ error: 'Invalid user ID format' });
+      // return statement here ensures we exit the function
+    }
+
+    // 2) Fetch from DB
     const db = getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(id) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
+      // return here too
     }
-    res.json({ user });
+
+    // 3) Return user
+    return res.json(user);
   } catch (error) {
-    console.error('[getUserById]', error);
-    res.status(500).json({ error: 'Failed to fetch user' });
+    return res.status(500).json({ error: 'Failed to fetch user' });
+    // return here as well
   }
 }
+
 
 /**
  * PUT /api/users/:id
@@ -59,7 +70,7 @@ export async function getUserById(req: Request, res: Response) {
 export async function updateUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const updates = req.body; // Validate or sanitize as needed
+    const updates = req.body;
     const db = getDb();
 
     const result = await db.collection('users').findOneAndUpdate(
@@ -69,13 +80,13 @@ export async function updateUser(req: Request, res: Response) {
     );
 
     if (!result) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User not found' }); // Explicit return
     }
 
-    res.json({ success: true, updatedUser: result });
+    return res.json({ success: true, updatedUser: result }); // Explicit return
   } catch (error) {
     console.error('[updateUser]', error);
-    res.status(500).json({ error: 'Failed to update user' });
+    return res.status(500).json({ error: 'Failed to update user' }); // Add return
   }
 }
 
@@ -90,12 +101,12 @@ export async function deleteUser(req: Request, res: Response) {
 
     const result = await db.collection('users').deleteOne({ _id: new ObjectId(id) });
     if (result.deletedCount === 0) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User not found' }); // Explicit return
     }
 
-    res.json({ success: true });
+    return res.json({ success: true }); // Explicit return
   } catch (error) {
     console.error('[deleteUser]', error);
-    res.status(500).json({ error: 'Failed to delete user' });
+    return res.status(500).json({ error: 'Failed to delete user' }); // Add return
   }
 }
