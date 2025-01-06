@@ -10,7 +10,7 @@ import {
 export const itemsRouter = Router();
 
 // GET /api/items
-itemsRouter.get('/list', getAllItems);
+itemsRouter.get('/all', getAllItems);
 itemsRouter.post('/', createItem);
 itemsRouter.get('/:id', getItemById);
 itemsRouter.put('/:id', updateItem);

@@ -62,24 +62,6 @@ export async function updateUserSettings(req: Request, res: Response) {
     return res.status(500).json({ error: 'Failed to update user settings' });
   }
 }
-export async function getUserItems(req: Request, res: Response) {
-  try {
-    const { id } = req.params;
-    // Validate user ID
-    if (!ObjectId.isValid(id)) {
-      return res.status(400).json({ error: 'Invalid user ID format' });
-    }
-    const db = getDb();
-    // Find items where ownerId === the user's _id
-    const userItems = await db.collection('items').find({
-      ownerId: new ObjectId(id)
-    }).toArray();
-    return res.json(userItems); // Return the array of items
-  } catch (error) {
-    console.error('[getUserItems]', error);
-    return res.status(500).json({ error: 'Failed to fetch user items' });
-  }
-}
 
 /**
  * POST /api/users

@@ -21,14 +21,14 @@ export class ApiService {
   getItems(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/items/list/${id}`); // example endpoint
   }
+  getAllItems(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/items/all`);
+  }
   createItem(itemData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/items`, itemData);
   }
   register(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, userData);
-  }
-  getUserItems(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users/${userId}/items`);
   }
   // ... more methods as needed
 }

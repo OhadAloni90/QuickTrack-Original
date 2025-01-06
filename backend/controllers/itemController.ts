@@ -70,13 +70,11 @@ export async function updateItem(req: Request, res: Response) {
     const { id } = req.params;
     const updates = req.body;
     const db = getDb();
-
     const result = await db.collection('items').findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: updates },
       { returnDocument: 'after' }
     );
-
     if (!result) {
       return res.status(404).json({ error: 'Item not found' });
     }
