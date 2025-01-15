@@ -9,12 +9,18 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EditUserComponent implements OnInit {
    username: string = '';
+   email: string = '';
   constructor(private api: ApiService, private auth: AuthService) { }
 
   ngOnInit() {
     this.api.getUserSettings(this.auth.getUserId() as string).subscribe((data: any) => {
       if(data) this.username = data?.settings?.username;
-    })
+      if(data) this.email = data?.settings?.email;
+    });
+  }
+
+  onEmailChange(newEmail: string) {
+    this.email = newEmail;
   }
 
 }
