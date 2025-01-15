@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Define color variables */
+$light-background: #ffffff;
+$light-text: #000000;
+$dark-background: #121212;
+$dark-text: #ffffff;
+
+/* Default styles */
+body {
+  background-color: $light-background;
+  color: $light-text;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: $dark-background;
+  color: $dark-text;
+}
+
+.dark-mode a {
+  color: lighten($dark-text, 20%);
+}
+
+.dark-mode button {
+  background-color: darken($dark-background, 10%);
+  color: $dark-text;
+}
+
+.dark-mode .container {
+  background-color: darken($dark-background, 5%);
+  color: $dark-text;
+}

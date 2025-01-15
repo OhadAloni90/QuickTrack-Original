@@ -8,6 +8,12 @@
     <div class="theme">
       <p class="text text_4">Theme: {{ settings.settings.theme }}</p>
     </div>
+    <div class="dark-mode-toggle">
+      <label>
+        <input type="checkbox" [checked]="settings.settings.theme === 'dark'" (change)="toggleTheme()">
+        Enable Dark Mode
+      </label>
+    </div>
     <div class="notification">
       <p class="text text_4"> cNotifications: {{ settings.settings.notifications }}</p>
     </div>
