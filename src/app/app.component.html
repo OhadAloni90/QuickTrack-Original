@@ -1,8 +1,13 @@
 <h1>{{ title }}</h1>
 <nav>
   <a routerLink="/users-settings">User Settings</a> |
-  <a routerLink="/register">Register</a> |
-  <a routerLink="/login">Login</a> |
+  <ng-container *ngIf="!authService.isLoggedIn()">
+    <a routerLink="/register">Register</a> |
+    <a routerLink="/login">Login</a> |
+  </ng-container>
+  <ng-container *ngIf="authService.isLoggedIn()">
+    <a href="#" (click)="logout()">Logout</a> |
+  </ng-container>
   <a routerLink="/items-list">Items List</a> |
   <a routerLink="/add-item">Add Item</a> |
   <a routerLink="/products">View Products</a>
