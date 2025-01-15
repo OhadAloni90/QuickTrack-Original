@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
+import { SharedInputComponent } from './shared/components/shared-input/shared-input.component';
+import { EditUserComponent } from './pages/edit-user/edit-user.component';
+import { ProductsComponent } from './pages/products/products.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { AddItemComponent } from './pages/add-item/add-item.component';
     RegistrationFormComponent,
     UserSettingsPanelComponent,
     LoginComponent,
-    AddItemComponent
+    AddItemComponent,
+    EditUserComponent,
+    SharedInputComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

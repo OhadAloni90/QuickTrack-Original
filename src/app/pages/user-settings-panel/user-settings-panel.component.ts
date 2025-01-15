@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Navigation } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -11,13 +12,7 @@ export class UserSettingsPanelComponent implements OnInit {
 
   settings: any = null;
   error: string | null = null;
-  newItem = {
-    name: 'Milk',
-    price: 2,
-    description: 'Milk 1 liter'
-  };
   constructor(private api: ApiService, private auth: AuthService) {}
-
   ngOnInit() {
     const id = this.auth.getUserId();
    if(id) this.api.getUserSettings(id).subscribe({
@@ -25,4 +20,5 @@ export class UserSettingsPanelComponent implements OnInit {
       error: (err: any) => this.error = 'Failed to load user settings'
     });
   }
+ 
 }

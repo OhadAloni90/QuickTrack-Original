@@ -4,10 +4,26 @@
 </div>
 
 <div *ngIf="settings">
-  <p>Theme: {{ settings.theme }}</p>
-  <p>Notifications: {{ settings.notifications }}</p>
+  <div class="container">
+    <div class="theme">
+      <p class="text text_4">Theme: {{ settings.settings.theme }}</p>
+    </div>
+    <div class="notification">
+      <p class="text text_4"> cNotifications: {{ settings.settings.notifications }}</p>
+    </div>
+    <div class="username">
+      <p class="text text_4">Username: {{settings.username}}</p>
+    </div>
+    <div class="username">
+      <p class="text text_4">Email: {{settings.email}}</p>
+    </div>
+  </div>
 </div>
-
+<div class="footer">
+  <div class="actions">
+    <button class="btn btn_action text text_4" [disabled]="!settings" [routerLink]="['edit']">     Edit Profile</button>
+  </div>
+</div>
 <div *ngIf="!error && !settings">
   Loading...
 </div>

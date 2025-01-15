@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="text text_4 pre-text" *ngIf="showPreText" >{{preText}}</div>
+  <input [(ngModel)]="inputText" class="input">
+  <div class="error-container" *ngIf="errMsgs ">
+    <div  *ngFor="let err of errMsgs" class="error">{{err}}</div>
+  </div>
+</div>

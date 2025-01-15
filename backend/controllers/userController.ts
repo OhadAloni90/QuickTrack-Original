@@ -31,8 +31,9 @@ export async function getUserSettings(req: Request, res: Response) {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+    console.log(user)
     // Return just the settings field
-    return res.json({ settings: user['settings'] });
+    return res.json({ settings: user });
   } catch (error) {
     console.error('[getUserSettings]', error);
     return res.status(500).json({ error: 'Failed to fetch user settings' });
@@ -40,28 +41,6 @@ export async function getUserSettings(req: Request, res: Response) {
 }
 
 // PUT /api/users/settings
-export async function updateUserSettings(req: Request, res: Response) {
-  try {
-    const newSettings = req.body; // { theme, notifications } etc.
-    const userId = 'someObjectId'; 
-    const db = getDb();
-    console.log(db)
-    const result = await db.collection('users').findOneAndUpdate(
-      { _id: new ObjectId(userId) },
-      { $set: { settings: newSettings } },
-      { returnDocument: 'after' }
-    );
-
-    if ( result &&  !result['value']) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    return res.json({ success: true, settings:  result && result['value']['settings'] });
-  } catch (error) {
-    console.error('[updateUserSettings]', error);
-    return res.status(500).json({ error: 'Failed to update user settings' });
-  }
-}
 
 /**
  * POST /api/users
@@ -114,28 +93,6 @@ export async function getUserById(req: Request, res: Response) {
  * PUT /api/users/:id
  * Update an existing user by ID.
  */
-export async function updateUser(req: Request, res: Response) {
-  try {
-    const { id } = req.params;
-    const updates = req.body;
-    const db = getDb();
-
-    const result = await db.collection('users').findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { $set: updates },
-      { returnDocument: 'after' } // returns the updated document
-    );
-
-    if (!result) {
-      return res.status(404).json({ error: 'User not found' }); // Explicit return
-    }
-
-    return res.json({ success: true, updatedUser: result }); // Explicit return
-  } catch (error) {
-    console.error('[updateUser]', error);
-    return res.status(500).json({ error: 'Failed to update user' }); // Add return
-  }
-}
 
 /**
  * DELETE /api/users/:id

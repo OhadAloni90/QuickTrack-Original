@@ -30,5 +30,8 @@ export class ApiService {
   register(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, userData);
   }
+  getAllProducts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/products`);
+  }
   // ... more methods as needed
 }

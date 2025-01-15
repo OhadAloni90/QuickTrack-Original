@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
   username: String,
   email: String,
-  // More fields later...
+  theme: String,
 });
 
 export const UserModel = mongoose.model('User', userSchema);
