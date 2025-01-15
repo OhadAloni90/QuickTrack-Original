@@ -107,6 +107,22 @@ export async function deleteItem(req: Request, res: Response) {
   }
   
 }
+/**
+ * GET /api/items/search
+ * Search items in the 'items' collection by name.
+ */
+export async function searchItems(req: Request, res: Response) {
+  try {
+    const searchTerm = req.query.q as string;
+    const db = getDb();
+    const items = await db.collection('items').find({ name: { $regex: searchTerm, $options: 'i' } }).toArray();
+    res.json({ items });
+  } catch (error) {
+    console.error('[searchItems]', error);
+    res.status(500).json({ error: 'Failed to search items' });
+  }
+}
+
 async function seedItems() {
   try {
     // 1) Connect to your DB (using your existing connectToDatabase logic)

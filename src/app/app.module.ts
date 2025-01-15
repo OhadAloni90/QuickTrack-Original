@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { ItemsListComponent } from './pages/items-list/items-list.component';
 import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
@@ -29,7 +29,8 @@ import { ProductsComponent } from './pages/products/products.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
     RegistrationFormComponent,
