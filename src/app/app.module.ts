@@ -6,8 +6,9 @@ import { ItemsListComponent } from './pages/items-list/items-list.component';
 import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { SharedInputComponent } from './shared/components/shared-input/shared-input.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
@@ -23,7 +24,8 @@ import { ProductsComponent } from './pages/products/products.component';
     AddItemComponent,
     EditUserComponent,
     SharedInputComponent,
-    ProductsComponent
+    ProductsComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,9 @@ import { ProductsComponent } from './pages/products/products.component';
     ItemsListComponent,
     UserSettingsPanelComponent
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
