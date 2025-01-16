@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
           // store user data
           this.auth.setUserData({ userId: resp.userId, token: resp.token });
           this.successMessage = 'Logged in successfully!';
+          this.errorMessage = '';
           // do any post-login navigation or calls
         }
       },
