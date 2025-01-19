@@ -33,5 +33,8 @@ export class ApiService {
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+  updateUser(userData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/users/update`, userData);
+  }
   // ... more methods as needed
 }
