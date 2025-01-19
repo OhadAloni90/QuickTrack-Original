@@ -6,19 +6,19 @@
 <form (ngSubmit)="onAddItem()">
   <div>
     <label>Name:
-      <input [(ngModel)]="newItem.name" name="name" required />
+      <input [(ngModel)]="newItem.name" name="name" required appValidateInput [maxLength]="30" [allowSymbols]="false" />
     </label>
   </div>
 
   <div>
     <label>Price:
-      <input [(ngModel)]="newItem.price" name="price" type="number" required />
+      <input [(ngModel)]="newItem.price" name="price" type="number" required appValidateInput [maxLength]="10" [allowSymbols]="false" />
     </label>
   </div>
 
   <div>
     <label>Description:
-      <input [(ngModel)]="newItem.description" name="description" />
+      <input [(ngModel)]="newItem.description" name="description" appValidateInput [maxLength]="100" [allowSymbols]="true" />
     </label>
   </div>
 

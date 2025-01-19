@@ -1,11 +1,11 @@
 <h2>Login</h2>
 <form (ngSubmit)="onLogin()">
   <label>Email:
-    <input type="email" [(ngModel)]="email" name="email" required />
+    <input type="email" [(ngModel)]="email" name="email" required appValidateInput [maxLength]="50" [allowSymbols]="true" />
   </label>
   <br/>
   <label>Password:
-    <input type="password" [(ngModel)]="password" name="password" required />
+    <input type="password" [(ngModel)]="password" name="password" required appValidateInput [maxLength]="30" [allowSymbols]="true" />
   </label>
   <br/>
   <button type="submit">Login</button>
