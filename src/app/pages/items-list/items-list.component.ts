@@ -15,9 +15,9 @@ export class ItemsListComponent implements OnInit {
 
   ngOnInit() {
     const id = this.auth.getUserId();
-    if(id) this.api.getAllItems().subscribe({
+    if(id) this.api.getUser(id).subscribe({
       next: (data: any) => this.items = data?.items || [],
-      error: (err: any) => this.error = 'Failed to load items'
+      error: (err: any) => this.error = 'Failed to load user items'
     });
   }
 }

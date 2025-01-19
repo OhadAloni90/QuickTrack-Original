@@ -21,11 +21,8 @@ export class ApiService {
   getItems(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/items/list/${id}`); // example endpoint
   }
-  getAllItems(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/items/all`);
-  }
-  createItem(itemData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/items`, itemData);
+  createItem(userId: string, itemData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/users/${userId}/items`, itemData);
   }
   register(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, userData);

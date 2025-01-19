@@ -80,11 +80,57 @@ export async function getUserById(req: Request, res: Response) {
       // return here too
     }
 
-    // 3) Return user
+    // Ensure items array exists
+    if (!user.items) {
+      user.items = [];
+    }
+
+    // 3) Return user with items
     return res.json(user);
   } catch (error) {
     return res.status(500).json({ error: 'Failed to fetch user' });
     // return here as well
+  }
+}
+
+/**
+ * POST /api/users/:userId/items
+ * Add a new item to a user's items array.
+ */
+export async function addItemToUser(req: Request, res: Response) {
+  try {
+    const userId = req.params['userId'];
+    const newItem = req.body;
+
+    if (!ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+
+    const db = getDb();
+    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Ensure items array exists
+    if (!user.items) {
+      user.items = [];
+    }
+
+    // Add new item to user's items array
+    user.items.push(newItem);
+
+    // Update user document in the database
+    await db.collection('users').updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { items: user.items } }
+    );
+
+    return res.status(200).json({ success: true, items: user.items });
+  } catch (error) {
+    console.error('[addItemToUser]', error);
+    return res.status(500).json({ error: 'Failed to add item to user' });
   }
 }
 

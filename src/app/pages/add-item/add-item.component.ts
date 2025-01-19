@@ -23,11 +23,8 @@ export class AddItemComponent implements OnInit {
   }
   onAddItem() {
     // Attach the user’s ID
-    const itemData = {
-      ...this.newItem,
-      ownerId: this.userId 
-    };
-    this.api.createItem(itemData).subscribe({
+    const itemData = { ...this.newItem };
+    this.api.createItem(this.userId as string, itemData).subscribe({
       next: (response) => {
         this.successMessage = 'Item created successfully!';
         this.errorMessage = null;
@@ -41,4 +38,3 @@ export class AddItemComponent implements OnInit {
     });
   }
 }
-
