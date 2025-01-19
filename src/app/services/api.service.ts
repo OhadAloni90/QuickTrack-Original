@@ -33,5 +33,8 @@ export class ApiService {
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+  toggleProductRecommended(productId: string, newVal: boolean): Observable<any> {
+    return this.http.put(`${this.baseUrl}/products/${productId}/recommended`, { recommended: newVal });
+  }
   // ... more methods as needed
 }

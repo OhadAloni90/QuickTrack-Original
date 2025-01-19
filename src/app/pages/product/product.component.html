@@ -1,0 +1,9 @@
+<div class="product-card">
+  <h2>{{ product.name }}</h2>
+  <p>Price: {{ product.price | currency }}</p>
+  <p>Popularity: {{ product.popularity }}</p>
+  <p>Recommended: {{ product.recommended ? 'Yes' : 'No' }}</p>
+  <button (click)="toggleRecommended()">
+    {{ product.recommended ? 'Unlike' : 'Like' }}
+  </button>
+</div>
