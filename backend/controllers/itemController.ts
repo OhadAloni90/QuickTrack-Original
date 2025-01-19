@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { connectToDatabase, getDb, seedUsers} from '../config/dbConnection';
+import { logger } from '../middlewares/logger';
 
 /**
  * GET /api/items
@@ -12,7 +13,7 @@ export async function getAllItems(req: Request, res: Response) {
     const items = await db.collection('items').find().toArray();
     res.json({ items });
   } catch (error) {
-    console.error('[getAllItems]', error);
+    logger.error('[getAllItems]', error);
     res.status(500).json({ error: 'Failed to fetch items' });
   }
 }
@@ -32,7 +33,7 @@ export async function createItem(req: Request, res: Response) {
     const result = await db.collection('items').insertOne(newItem);
     res.status(201).json({ success: true, itemId: result.insertedId });
   } catch (error) {
-    console.error('[createItem]', error);
+    logger.error('[createItem]', error);
     res.status(500).json({ error: 'Failed to create item' });
   }
 }
@@ -46,7 +47,7 @@ export async function getItemById(req: Request, res: Response) {
 
     // Validate the ObjectId
     if (!ObjectId.isValid(id)) {
-      console.log('Invalid ID:', id);
+      logger.info('Invalid ID:', id);
       return res.status(400).json({ error: 'Invalid item ID format' });
     }
     const db = getDb();
@@ -57,7 +58,7 @@ export async function getItemById(req: Request, res: Response) {
 
     return res.json({ item });
   } catch (error) {
-    console.error('[getItemById]', error);
+    logger.error('[getItemById]', error);
     return res.status(500).json({ error: 'Failed to fetch item' });
   }
 }
@@ -81,7 +82,7 @@ export async function updateItem(req: Request, res: Response) {
 
     return res.json({ success: true, updatedItem: result }); // Explicit return
   } catch (error) {
-    console.error('[updateItem]', error);
+    logger.error('[updateItem]', error);
     return res.status(500).json({ error: 'Failed to update item' }); // Explicit return
   }
 }
@@ -102,7 +103,7 @@ export async function deleteItem(req: Request, res: Response) {
 
     return res.json({ success: true }); // Explicit return
   } catch (error) {
-    console.error('[deleteItem]', error);
+    logger.error('[deleteItem]', error);
     return res.status(500).json({ error: 'Failed to delete item' }); // Explicit return
   }
   
@@ -121,11 +122,10 @@ async function seedItems() {
     ];
     // 3) Insert them all at once
     const result = await db.collection('items').insertMany(itemsToInsert);
-    console.log(`Inserted ${result.insertedCount} items into "items" collection.`);
-    // 4) Optionally exit the process or close the DB connection
+    logger.info(`Inserted ${result.insertedCount} items into "items" collection.`);
     process.exit(0);
   } catch (error) {
-    console.error('Error seeding items:', error);
+    logger.error('Error seeding items:', error);
     process.exit(1);
   }
 }

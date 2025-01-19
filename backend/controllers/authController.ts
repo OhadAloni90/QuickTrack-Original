@@ -1,6 +1,7 @@
 // controllers/authController.ts
 import { Request, Response } from 'express';
 import { getDb } from '../config/dbConnection';
+import { logger } from '../middlewares/logger';
 
 export async function loginUser(req: Request, res: Response) {
   try {
@@ -22,7 +23,7 @@ export async function loginUser(req: Request, res: Response) {
     // 4) Return success + maybe a token
     return res.json({ success: true, userId: user._id, message: 'Logged in' });
   } catch (error) {
-    console.error('[loginUser]', error);
+    logger.error('[loginUser]', error);
     return res.status(500).json({ error: 'Failed to log in' });
   }
 }
@@ -47,7 +48,7 @@ export async function registerUser(req: Request, res: Response) {
 
     return res.status(201).json({ success: true, userId: result.insertedId });
   } catch (error) {
-    console.error('[registerUser]', error);
+    logger.error('[registerUser]', error);
     return res.status(500).json({ error: 'Failed to register user' });
   }
 }

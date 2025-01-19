@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/dbConnection';
+import { logger } from '../middlewares/logger';
 /**
  * GET /api/users
  * Fetch all users from the 'users' collection.
@@ -9,11 +10,11 @@ export async function getAllUsers(req: Request, res: Response) {
   try {
     
     const db = getDb();
-    console.log(db)
+    logger.info(db)
     const users = await db.collection('users').find().toArray();
     res.json({ users });
   } catch (error) {
-    console.error('[getAllUsers]', error);
+    logger.error('[getAllUsers]', error);
     res.status(500).json({ error: 'Failed to fetch users' });
   }
 }
@@ -31,11 +32,11 @@ export async function getUserSettings(req: Request, res: Response) {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    console.log(user)
+    logger.info(user)
     // Return just the settings field
     return res.json({ settings: user });
   } catch (error) {
-    console.error('[getUserSettings]', error);
+    logger.error('[getUserSettings]', error);
     return res.status(500).json({ error: 'Failed to fetch user settings' });
   }
 }
@@ -53,7 +54,7 @@ export async function createUser(req: Request, res: Response) {
     const result = await db.collection('users').insertOne(userData);
     res.status(201).json({ success: true, userId: result.insertedId });
   } catch (error) {
-    console.error('[createUser]', error);
+    logger.error('[createUser]', error);
     res.status(500).json({ error: 'Failed to create user' });
   }
 }
@@ -110,7 +111,7 @@ export async function deleteUser(req: Request, res: Response) {
 
     return res.json({ success: true }); // Explicit return
   } catch (error) {
-    console.error('[deleteUser]', error);
+    logger.error('[deleteUser]', error);
     return res.status(500).json({ error: 'Failed to delete user' }); // Add return
   }
 }
