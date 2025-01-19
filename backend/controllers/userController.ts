@@ -93,6 +93,39 @@ export async function getUserById(req: Request, res: Response) {
  * PUT /api/users/:id
  * Update an existing user by ID.
  */
+export async function updateUser(req: Request, res: Response) {
+  try {
+    const { id, username, email } = req.body;
+
+    // Validate input
+    if (!username || !email) {
+      return res.status(400).json({ error: 'Username and email are required' });
+    }
+
+    const db = getDb();
+
+    // Check if email already exists for a different user
+    const existingUser = await db.collection('users').findOne({ email, _id: { $ne: new ObjectId(id) } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email already in use by another user' });
+    }
+
+    // Update user
+    const result = await db.collection('users').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { username, email } }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('[updateUser]', error);
+    return res.status(500).json({ error: 'Failed to update user' });
+  }
+}
 
 /**
  * DELETE /api/users/:id
