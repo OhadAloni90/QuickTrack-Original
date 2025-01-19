@@ -1,6 +1,7 @@
 // controllers/authController.ts
 import { Request, Response } from 'express';
 import { getDb } from '../config/dbConnection';
+import { ObjectId } from 'mongodb';
 
 export async function loginUser(req: Request, res: Response) {
   try {
@@ -24,6 +25,26 @@ export async function loginUser(req: Request, res: Response) {
   } catch (error) {
     console.error('[loginUser]', error);
     return res.status(500).json({ error: 'Failed to log in' });
+  }
+}
+
+export async function logoutUser(req: Request, res: Response) {
+  try {
+    const userId = req.headers['user-id'] as string;
+    if (!userId || !ObjectId.isValid(userId)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const db = getDb();
+    await db.collection('users').updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { LastLogout: new Date() } }
+    );
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('[logoutUser]', error);
+    return res.status(500).json({ error: 'Failed to log out' });
   }
 }
 

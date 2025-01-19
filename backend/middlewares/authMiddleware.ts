@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import { ObjectId } from 'mongodb';
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  // Example: check for a token or session
-  // Currently just a placeholder, so we skip real checks
-  console.log('Auth check placeholder');
-  next();
+  const userId = req.headers['user-id'] as string;
+  if (userId && ObjectId.isValid(userId)) {
+    req.userId = userId;
+    next();
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
 }
