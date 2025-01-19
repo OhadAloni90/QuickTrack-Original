@@ -19,8 +19,10 @@ export async function loginUser(req: Request, res: Response) {
     if (user['password'] !== password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    // 4) Return success + maybe a token
-    return res.json({ success: true, userId: user._id, message: 'Logged in' });
+    // 4) Update lastLogin and return success + maybe a token
+    const lastLogin = new Date();
+    await db.collection("users").updateOne({ _id: user._id }, { $set: { lastLogin } });
+    return res.json({ success: true, userId: user._id, message: 'Logged in', lastLogin });
   } catch (error) {
     console.error('[loginUser]', error);
     return res.status(500).json({ error: 'Failed to log in' });
