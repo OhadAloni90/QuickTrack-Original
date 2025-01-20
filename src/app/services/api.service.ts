@@ -33,5 +33,8 @@ export class ApiService {
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+  getUserStats(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/statistics`);
+  }
   // ... more methods as needed
 }

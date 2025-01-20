@@ -1,6 +1,33 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/dbConnection';
+
+/**
+ * GET /api/users/statistics
+ * Fetch aggregated user statistics.
+ */
+export async function getUserStats(req: Request, res: Response) {
+  try {
+    const db = getDb();
+    const pipeline = [
+      { $unwind: "$items" },
+      {
+        $group: {
+          _id: "$_id",
+          totalItemCount: { $sum: 1 },
+          avgItemPrice: { $avg: "$items.price" },
+          maxItemPrice: { $max: "$items.price" }
+        }
+      }
+    ];
+    const result = await db.collection('users').aggregate(pipeline).toArray();
+    return res.json(result);
+  } catch (error) {
+    console.error('[getUserStats]', error);
+    return res.status(500).json({ error: 'Failed to compute user statistics' });
+  }
+}
+
 /**
  * GET /api/users
  * Fetch all users from the 'users' collection.

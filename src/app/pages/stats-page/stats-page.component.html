@@ -1,0 +1,34 @@
+<!-- src/app/pages/stats-page/stats-page.component.html -->
+<div class="stats-page">
+  <h2>User Statistics</h2>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="loading" class="loading">
+    Loading statistics...
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMsg" class="error">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Statistics Table -->
+  <table *ngIf="!loading && !errorMsg">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Total Items</th>
+        <th>Avg Price</th>
+        <th>Max Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stat of userStats">
+        <td>{{ stat._id }}</td>
+        <td>{{ stat.totalItemCount }}</td>
+        <td>{{ stat.avgItemPrice | number:'1.2-2' }}</td>
+        <td>{{ stat.maxItemPrice }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
