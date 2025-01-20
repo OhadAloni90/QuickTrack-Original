@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/dbConnection';
+import { checkRole } from '../middlewares/roleMiddleware';
 /**
  * GET /api/users
  * Fetch all users from the 'users' collection.
@@ -95,10 +96,44 @@ export async function getUserById(req: Request, res: Response) {
  */
 
 /**
- * DELETE /api/users/:id
- * Remove a user from the 'users' collection.
+ * PUT /api/users/:id/role
+ * Update a user's role in the 'users' collection.
  */
-export async function deleteUser(req: Request, res: Response) {
+export async function updateUserRole(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { newRole } = req.body;
+
+    // Validate the user ID
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+
+    // Validate the new role
+    const validRoles = ['admin', 'editor', 'viewer'];
+    if (!validRoles.includes(newRole)) {
+      return res.status(400).json({ error: 'Invalid role' });
+    }
+
+    const db = getDb();
+    const result = await db.collection('users').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { role: newRole } }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Optionally log the role change for auditing
+    console.log(`User ${id} role changed to ${newRole}`);
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('[updateUserRole]', error);
+    return res.status(500).json({ error: 'Failed to update user role' });
+  }
+}
   try {
     const { id } = req.params;
     const db = getDb();

@@ -17,6 +17,22 @@
     <div class="username">
       <p class="text text_4">Email: {{settings.email}}</p>
     </div>
+    <div *ngIf="authService.currentUser?.role === 'admin'" class="role-management">
+      <h3>Manage User Roles</h3>
+      <form (ngSubmit)="onChangeUserRole()">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" [(ngModel)]="selectedUserId" name="userId" required>
+        
+        <label for="newRole">New Role:</label>
+        <select id="newRole" [(ngModel)]="newRole" name="newRole" required>
+          <option value="viewer">Viewer</option>
+          <option value="editor">Editor</option>
+          <option value="admin">Admin</option>
+        </select>
+        
+        <button type="submit" class="btn btn_action text text_4">Change Role</button>
+      </form>
+    </div>
   </div>
 </div>
 <div class="footer">
