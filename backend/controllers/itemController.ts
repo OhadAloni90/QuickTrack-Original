@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { connectToDatabase, getDb, seedUsers} from '../config/dbConnection';
+import { connectToDatabase, getDb, seedUsers } from '../config/dbConnection';
+import { upload } from '../config/multerConfig';
+import { uploadMultiple } from './uploadController';
 
 /**
  * GET /api/items
@@ -30,12 +32,53 @@ export async function createItem(req: Request, res: Response) {
     // Convert the ownerId to an ObjectId if needed
     newItem.ownerId = new ObjectId(newItem.ownerId);
     const result = await db.collection('items').insertOne(newItem);
+
+    // Call uploadItemFiles to handle file uploads
+    req.body.itemId = result.insertedId;
+    await uploadItemFiles(req, res);
+
     res.status(201).json({ success: true, itemId: result.insertedId });
   } catch (error) {
     console.error('[createItem]', error);
     res.status(500).json({ error: 'Failed to create item' });
   }
 }
+/**
+ * Handle file uploads for an item.
+ */
+export async function uploadItemFiles(req: Request, res: Response) {
+  try {
+    const files = req.files as Express.Multer.File[];
+    const itemId = req.body.itemId;
+
+    if (!ObjectId.isValid(itemId)) {
+      return res.status(400).json({ error: 'Invalid item ID format' });
+    }
+
+    const db = getDb();
+    const fileMetadata = files.map(file => ({
+      originalname: file.originalname,
+      filename: file.filename,
+      size: file.size,
+      mimetype: file.mimetype,
+      path: file.path,
+      itemId: new ObjectId(itemId)
+    }));
+
+    await db.collection('uploads').insertMany(fileMetadata);
+
+    await db.collection('items').updateOne(
+      { _id: new ObjectId(itemId) },
+      { $push: { uploads: { $each: fileMetadata } } }
+    );
+
+    return res.json({ success: true, files: fileMetadata });
+  } catch (error) {
+    console.error('[uploadItemFiles]', error);
+    return res.status(500).json({ error: 'Failed to upload files' });
+  }
+}
+
 /**
  * GET /api/items/:id
  * Fetch a single item by ID.

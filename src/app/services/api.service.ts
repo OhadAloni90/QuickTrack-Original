@@ -24,8 +24,11 @@ export class ApiService {
   getAllItems(): Observable<any> {
     return this.http.get(`${this.baseUrl}/items/all`);
   }
-  createItem(itemData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/items`, itemData);
+  createItem(itemData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/items`, itemData, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
   register(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, userData);
