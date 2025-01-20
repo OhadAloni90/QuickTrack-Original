@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [backend, frontend]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ matrix.part }}/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./${{ matrix.part }}
+
+    - name: Run tests
+      run: npm test
+      working-directory: ./${{ matrix.part }}
+
+    - name: Determine changed files
+      id: changes
+      uses: tj-actions/changed-files@v34
+      with:
+        files: |
+          backend/**
+          src/**
+
+    - name: Skip backend if no changes
+      if: matrix.part == 'backend' && steps.changes.outputs.changed_files == ''
+      run: echo "No changes in backend, skipping tests."
+
+    - name: Skip frontend if no changes
+      if: matrix.part == 'frontend' && steps.changes.outputs.changed_files == ''
+      run: echo "No changes in frontend, skipping tests."
