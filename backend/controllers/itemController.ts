@@ -3,8 +3,11 @@ import { ObjectId } from 'mongodb';
 import { connectToDatabase, getDb, seedUsers} from '../config/dbConnection';
 
 /**
- * GET /api/items
- * Fetch all items from the 'items' collection.
+ * Fetches all items from the 'items' collection.
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export async function getAllItems(req: Request, res: Response) {
   try {
@@ -18,10 +21,12 @@ export async function getAllItems(req: Request, res: Response) {
 }
 
 /**
- * POST /api/items
- * Create a new item in the 'items' collection.
+ * Creates a new item in the 'items' collection.
+ *
+ * @param {Request} req - The request object containing item details.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
-// itemController.ts
 export async function createItem(req: Request, res: Response) {
   try {
     const newItem = req.body; 
@@ -37,8 +42,11 @@ export async function createItem(req: Request, res: Response) {
   }
 }
 /**
- * GET /api/items/:id
- * Fetch a single item by ID.
+ * Fetches a single item by its ID.
+ *
+ * @param {Request} req - The request object containing the item ID.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export async function getItemById(req: Request, res: Response) {
   try {
@@ -62,8 +70,11 @@ export async function getItemById(req: Request, res: Response) {
   }
 }
 /**
- * PUT /api/items/:id
- * Update an existing item by ID.
+ * Updates an existing item by its ID.
+ *
+ * @param {Request} req - The request object containing the item ID and update details.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export async function updateItem(req: Request, res: Response) {
   try {
@@ -87,8 +98,11 @@ export async function updateItem(req: Request, res: Response) {
 }
 
 /**
- * DELETE /api/items/:id
- * Remove an item from the 'items' collection.
+ * Removes an item from the 'items' collection by its ID.
+ *
+ * @param {Request} req - The request object containing the item ID.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export async function deleteItem(req: Request, res: Response) {
   try {

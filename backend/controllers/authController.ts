@@ -2,6 +2,13 @@
 import { Request, Response } from 'express';
 import { getDb } from '../config/dbConnection';
 
+/**
+ * Authenticates a user based on email and password.
+ * 
+ * @param {Request} req - The request object containing user credentials.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<Response>} A promise that resolves to a response indicating success or failure.
+ */
 export async function loginUser(req: Request, res: Response) {
   try {
     const { email, password } = req.body;
@@ -27,6 +34,13 @@ export async function loginUser(req: Request, res: Response) {
   }
 }
 
+/**
+ * Registers a new user with the provided username, email, and password.
+ * 
+ * @param {Request} req - The request object containing user registration details.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<Response>} A promise that resolves to a response indicating success or failure.
+ */
 export async function registerUser(req: Request, res: Response) {
   try {
     const { username, email, password } = req.body; 

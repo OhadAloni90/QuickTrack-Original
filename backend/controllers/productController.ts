@@ -2,6 +2,13 @@
 import { Request, Response } from 'express';
 import { getDb } from '../config/dbConnection'; // or use Mongoose if you prefer
 
+/**
+ * Creates a new product in the 'products' collection.
+ *
+ * @param {Request} req - The request object containing product details.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<Response>} A promise that resolves to a response indicating success or failure.
+ */
 export async function createProduct(req: Request, res: Response) {
   try {
     const productData = req.body;
@@ -15,6 +22,13 @@ export async function createProduct(req: Request, res: Response) {
   }
 }
 
+/**
+ * Fetches all products from the 'products' collection.
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object to send the result.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ */
 export async function getAllProducts(req: Request, res: Response) {
     try {
       const db = getDb();
@@ -25,5 +39,3 @@ export async function getAllProducts(req: Request, res: Response) {
       res.status(500).json({ error: 'Failed to fetch products' });
     }
   }
-
-  
