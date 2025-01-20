@@ -1,0 +1,6 @@
+{
+  "DB_URI": "mongodb+srv://<username>:<password>@cluster0.mongodb.net/proddb",
+  "USERNAME": "prodUser",
+  "PASSWORD": "prodPassword",
+  "LOG_LEVEL": "info"
+}
