@@ -1,0 +1,15 @@
+# frontend/.dockerignore
+
+# Node modules directory
+node_modules/
+
+# Build output directory
+dist/
+
+# Logs
+npm-debug.log
+
+# Optional: Add any other files or directories to exclude
+.DS_Store
+coverage/
+*.log
