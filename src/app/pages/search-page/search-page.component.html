@@ -1,0 +1,38 @@
+<div class="search-page">
+  <!-- Filter Section -->
+  <div class="filters">
+    <label for="category">Category:</label>
+    <select id="category" [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+      <option value="">All</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+
+    <label for="priceMin">Price Min:</label>
+    <input type="number" id="priceMin" [(ngModel)]="priceMin" (change)="onFilterChange()" placeholder="Min Price">
+
+    <label for="priceMax">Price Max:</label>
+    <input type="number" id="priceMax" [(ngModel)]="priceMax" (change)="onFilterChange()" placeholder="Max Price">
+
+    <label for="searchText">Search:</label>
+    <input type="text" id="searchText" [(ngModel)]="searchText" (input)="onFilterChange()" placeholder="Search...">
+  </div>
+
+  <!-- Results Section -->
+  <div class="results">
+    <div *ngIf="items.length === 0">No results found.</div>
+    <ul>
+      <li *ngFor="let item of items">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <p>Price: {{ item.price | currency }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>

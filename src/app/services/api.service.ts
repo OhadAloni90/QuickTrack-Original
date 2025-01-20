@@ -33,5 +33,14 @@ export class ApiService {
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+  searchItems(filters: any): Observable<any> {
+    let params = new HttpParams();
+    for (const key in filters) {
+      if (filters[key] !== null && filters[key] !== undefined) {
+        params = params.set(key, filters[key]);
+      }
+    }
+    return this.http.get(`${this.baseUrl}/search`, { params });
+  }
   // ... more methods as needed
 }

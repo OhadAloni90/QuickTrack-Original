@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 const routes: Routes = [
   { path: '', redirectTo: 'users-settings', pathMatch: 'full' },
   { path: 'register', component: RegistrationFormComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'add-item', component: AddItemComponent },
   {path: 'products', component: ProductsComponent},
   { path: 'login', component: LoginComponent },
+  { path: 'search', component: SearchPageComponent },
   // Wildcard fallback:
   { path: '**', redirectTo: 'users-settings' }
 ];

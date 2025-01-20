@@ -15,7 +15,13 @@ export async function connectToDatabase(): Promise<Db> {
   await client.connect();
   console.log('Connected to MongoDB:', uri);
   db = client.db(dbName);
-  console.log(db)
+  console.log(db);
+
+  // Create necessary indexes for the products collection
+  await db.collection('products').createIndex({ name: "text", description: "text" });
+  await db.collection('products').createIndex({ category: 1 });
+  await db.collection('products').createIndex({ price: 1 });
+
   return db;
 }
 
