@@ -47,7 +47,7 @@ export async function updateUserSettings(req: Request, res: Response) {
     const newSettings = req.body; // Validate and sanitize as needed
 
     const result = await db.collection('users').updateOne(
-      { _id: new ObjectId(userId) },
+      { _id: userId },
       { $set: { settings: newSettings } }
     );
 
