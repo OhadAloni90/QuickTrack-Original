@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.successMessage = '';
+    this.errorMessage = '';
     this.api.login({ email: this.email, password: this.password })
     .subscribe({
       next: (resp) => {
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         this.errorMessage = 'Login failed';
+        this.successMessage = '';
       }
     });
     }
