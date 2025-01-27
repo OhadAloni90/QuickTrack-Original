@@ -13,6 +13,7 @@ import { AddItemComponent } from './pages/add-item/add-item.component';
 import { SharedInputComponent } from './shared/components/shared-input/shared-input.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { reducers } from './store'; // Import reducers from the store index file
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { ProductsComponent } from './pages/products/products.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers) // Use the imported reducers
   ],
   exports: [
     RegistrationFormComponent,

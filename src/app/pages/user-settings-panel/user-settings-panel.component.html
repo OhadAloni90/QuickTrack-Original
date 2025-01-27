@@ -11,9 +11,9 @@
     <button class="btn btn_toggle text text_4" (click)="toggleDarkMode()">
       Toggle Dark Mode
     </button>
-    <p class="text text_4">Dark Mode is: {{ darkMode$ | async ? 'On' : 'Off' }}</p>
+    <p class="text text_4">Dark Mode is: {{ (darkMode$ | async) ? 'On' : 'Off' }}</p>
     <div class="notification">
-      <p class="text text_4"> cNotifications: {{ settings.settings.notifications }}</p>
+      <p class="text text_4">Notifications: {{ settings.settings.notifications }}</p>
     </div>
     <div class="username">
       <p class="text text_4">Username: {{settings.username}}</p>

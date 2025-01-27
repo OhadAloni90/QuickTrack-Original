@@ -14,5 +14,5 @@ export const initialState: ThemeState = {
 export const themeReducer = createReducer(
   initialState,
   on(toggleDarkMode, state => ({ ...state, darkMode: !state.darkMode })),
-  on(setDarkMode, (state, { darkMode }: { darkMode: boolean }) => ({ ...state, darkMode }))
+  on(setDarkMode, (state, { darkMode }) => ({ ...state, darkMode }))
 );
