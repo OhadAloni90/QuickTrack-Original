@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 function loadConfig() {
-  const env = process.env.NODE_ENV || 'development';
+  const env = process.env['NODE_ENV'] || 'development';
   const configPath = env === 'production' ? 'config.prod.json' : 'config.dev.json';
   const configFile = path.resolve(__dirname, configPath);
   const config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
