@@ -26,7 +26,7 @@ export class UserSettingsPanelComponent implements OnInit {
    if(id) this.api.getUserSettings(id).subscribe({
       next: (data: any) => {
         this.settings = data.settings;
-        this.store.dispatch(setDarkMode({ darkMode: this.settings.theme === 'dark' }));
+        this.store.dispatch(setDarkMode({ darkMode: this.settings.settings.theme === 'dark' }));
       },
       error: (err: any) => this.error = 'Failed to load user settings'
     });

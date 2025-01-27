@@ -7,5 +7,5 @@ export const selectThemeState = createFeatureSelector<ThemeState>('theme');
 // Create a selector for the darkMode property
 export const selectDarkMode = createSelector(
   selectThemeState,
-  (state: ThemeState) => state.isDarkMode
+  (state: ThemeState) => state.darkMode
 );
