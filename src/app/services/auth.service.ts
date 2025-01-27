@@ -7,14 +7,19 @@ export class AuthService {
   constructor() {}
 
   // Store user data (ID, token, etc.) in localStorage or a BehaviorSubject
+  setUserId(userId: string) {
+    localStorage.setItem('userId', userId);
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('userId');
+  }
+
   setUserData(userData: { userId: string; token?: string }) {
-    localStorage.setItem('userId', userData.userId);
+    this.setUserId(userData.userId);
     if (userData.token) {
       localStorage.setItem('token', userData.token);
     }
-  }
-  getUserId(): string | null {
-    return localStorage.getItem('userId');
   }
   getToken(): string | null {
     return localStorage.getItem('token');
