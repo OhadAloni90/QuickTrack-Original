@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent,
+    LoaderComponent } from './app.component';
 import { ItemsListComponent } from './pages/items-list/items-list.component';
 import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
