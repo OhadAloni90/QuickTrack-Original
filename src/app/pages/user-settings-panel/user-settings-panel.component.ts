@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { Navigation } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,7 @@ export class UserSettingsPanelComponent implements OnInit {
   settings: any = null;
   error: string | null = null;
 
-  constructor(private api: ApiService, private auth: AuthService) {}
+  constructor(private api: ApiService, private auth: AuthService, private renderer: Renderer2) {}
 
   ngOnInit() {
     const id = this.auth.getUserId();
@@ -33,7 +33,14 @@ export class UserSettingsPanelComponent implements OnInit {
       const id = this.auth.getUserId();
       if (id) {
         this.api.updateUserSettings(id, { theme: newTheme }).subscribe({
-          next: () => this.themeChanged.emit(newTheme),
+          next: () => {
+            this.themeChanged.emit(newTheme);
+            if (newTheme === 'dark') {
+              this.renderer.addClass(document.body, 'dark-mode');
+            } else {
+              this.renderer.removeClass(document.body, 'dark-mode');
+            }
+          },
           error: (err: any) => this.error = 'Failed to update theme'
         });
       }

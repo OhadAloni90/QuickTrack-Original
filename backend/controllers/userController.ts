@@ -49,7 +49,7 @@ export async function updateUserSettings(req: Request, res: Response) {
 
     const result = await db.collection('users').updateOne(
       { _id: userObjectId },
-      { $set: { settings: newSettings } }
+      { $set: { 'settings.theme': newSettings.theme } }
     );
 
     if (result.modifiedCount === 1) {
