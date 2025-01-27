@@ -10,7 +10,6 @@ export class SharedInputComponent implements OnInit {
   @Input() showPreText: boolean = false;
   @Input() preText: string = '';
   @Output() inputTextChange = new EventEmitter<string>();
-  @Output() inputTextChange = new EventEmitter<string>();
   errMsgs: string[] = [];
   constructor() { }
 
