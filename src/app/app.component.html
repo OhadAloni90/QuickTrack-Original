@@ -1,13 +1,14 @@
 <h1>{{ title }}</h1>
 <nav>
+  <ng-container *ngIf="isLoggedIn; else loggedOut">
+    <a href="#" (click)="logout()">Logout</a>
+  </ng-container>
+  <ng-template #loggedOut>
+    <a routerLink="/register">Register</a>
+    <a routerLink="/login">Login</a>
+  </ng-template>
+  <!-- Other navigation links -->
   <a routerLink="/users-settings">User Settings</a> |
-  <ng-container *ngIf="!authService.isLoggedIn()">
-    <a routerLink="/register">Register</a> |
-    <a routerLink="/login">Login</a> |
-  </ng-container>
-  <ng-container *ngIf="authService.isLoggedIn()">
-    <a href="#" (click)="logout()">Logout</a> |
-  </ng-container>
   <a routerLink="/items-list">Items List</a> |
   <a routerLink="/add-item">Add Item</a> |
   <a routerLink="/products">View Products</a>

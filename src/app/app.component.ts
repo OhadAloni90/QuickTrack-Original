@@ -11,6 +11,10 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {}
 
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
   logout() {
     this.authService.clearUserData();
     // Optionally navigate to home or refresh
