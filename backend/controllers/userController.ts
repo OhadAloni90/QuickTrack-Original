@@ -44,10 +44,11 @@ export async function updateUserSettings(req: Request, res: Response) {
   try {
     const db = getDb();
     const userId = req.params['id'];
+    const userObjectId = new ObjectId(userId);
     const newSettings = req.body; // Validate and sanitize as needed
 
     const result = await db.collection('users').updateOne(
-      { _id: userId },
+      { _id: userObjectId },
       { $set: { settings: newSettings } }
     );
 
