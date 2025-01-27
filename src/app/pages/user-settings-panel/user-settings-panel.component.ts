@@ -22,16 +22,26 @@ export class UserSettingsPanelComponent implements OnInit {
     this.darkMode$ = this.store.pipe(select(selectDarkMode));
   }
   ngOnInit(): void {
-    const id = this.auth.getUserId();
-   if(id) this.api.getUserSettings(id).subscribe({
-      next: (data: any) => {
-        this.settings = data.settings;
-        this.store.dispatch(setDarkMode({ darkMode: this.settings.settings.theme === 'dark' }));
-      },
-      error: (err: any) => this.error = 'Failed to load user settings'
-    });
+    const storedDarkMode = localStorage.getItem('darkMode');
+    if (storedDarkMode !== null) {
+      this.store.dispatch(setDarkMode({ darkMode: storedDarkMode === 'true' }));
+    } else {
+      const id = this.auth.getUserId();
+      if(id) this.api.getUserSettings(id).subscribe({
+        next: (data: any) => {
+          this.settings = data.settings;
+          const isDarkMode = this.settings.settings.theme === 'dark';
+          this.store.dispatch(setDarkMode({ darkMode: isDarkMode }));
+          localStorage.setItem('darkMode', isDarkMode.toString());
+        },
+        error: (err: any) => this.error = 'Failed to load user settings'
+      });
+    }
   }
   toggleDarkMode() {
     this.store.dispatch(toggleDarkMode());
+    this.darkMode$.subscribe((darkMode) => {
+      localStorage.setItem('darkMode', darkMode.toString());
+    });
   }
 }
