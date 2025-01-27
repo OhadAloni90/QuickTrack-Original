@@ -113,7 +113,7 @@ export async function deleteItem(req: Request, res: Response) {
  */
 export async function searchItems(req: Request, res: Response) {
   try {
-    const searchTerm = req.query.q as string;
+    const searchTerm = req.query['q'] as string;
     const db = getDb();
     const items = await db.collection('items').find({ name: { $regex: searchTerm, $options: 'i' } }).toArray();
     res.json({ items });
