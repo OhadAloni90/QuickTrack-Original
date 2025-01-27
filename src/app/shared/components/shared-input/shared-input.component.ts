@@ -9,19 +9,17 @@ export class SharedInputComponent implements OnInit {
   @Input() inputText: string = '';
   @Input() showPreText: boolean = false;
   @Input() preText: string = '';
-  @Output() inputChange = new EventEmitter<string>();
+  @Output() inputTextChange = new EventEmitter<string>();
   errMsgs: string[] = [];
   constructor() { }
 
   ngOnInit() {
-    if (!this.inputText) {
-      this.errMsgs.push('This field is required.');
-    }
+    // Initial load should not show error messages
   }
 
   onInputChange(value: string) {
     this.inputText = value;
-    this.inputChange.emit(this.inputText);
+    this.inputTextChange.emit(this.inputText);
     this.errMsgs = []; // Clear previous errors
     if (!this.inputText) {
       this.errMsgs.push('This field is required.');
