@@ -7,6 +7,7 @@ import { RegistrationFormComponent } from './pages/registration-form/registratio
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { LoginComponent } from './pages/login/login.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
