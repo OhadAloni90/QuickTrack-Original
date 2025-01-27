@@ -1,10 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { toggleDarkMode, setDarkMode } from './theme.actions';
-
-// Define the initial state for the theme
-export interface ThemeState {
-  darkMode: boolean;
-}
+import { ThemeState } from './theme.state';
 
 export const initialState: ThemeState = {
   darkMode: false

@@ -2,6 +2,6 @@
 
 // Define the ThemeState interface
 export interface ThemeState {
-  themeName: string; // Name of the current theme
+  darkMode: boolean; // Indicates if dark mode is enabled
   isDarkMode: boolean; // Flag indicating if dark mode is enabled
 }

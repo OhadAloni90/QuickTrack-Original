@@ -18,4 +18,3 @@ export const reducers: ActionReducerMap<AppState> = {
 // Exporting the store-related modules
 export * from './theme.actions';
 export * from './theme.reducer';
-export * from './theme.state';
