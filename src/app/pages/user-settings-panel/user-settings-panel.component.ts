@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store } from '../../store/index';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { setDarkMode, toggleDarkMode } from 'src/app/store/theme.actions';
@@ -13,7 +13,7 @@ export class UserSettingsPanelComponent implements OnInit {
 
   settings: any = null;
   error: string | null = null;
-  constructor(private api: ApiService, private auth: AuthService, private store: Store) {}
+  constructor(private api: ApiService, private auth: AuthService, private store: Store<any>) {}
   ngOnInit() {
     const id = this.auth.getUserId();
    if(id) this.api.getUserSettings(id).subscribe({

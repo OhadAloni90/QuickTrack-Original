@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ItemsListComponent } from './pages/items-list/items-list.component';
-import { StoreModule } from '@ngrx/store';
-import { themeReducer } from './store/theme.reducer';
+import { StoreModule } from './store/index';
 import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
 import { UserSettingsPanelComponent } from './pages/user-settings-panel/user-settings-panel.component';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +31,7 @@ import { ProductsComponent } from './pages/products/products.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ theme: themeReducer })
+    StoreModule.forRoot(reducers)
   ],
   exports: [
     RegistrationFormComponent,
