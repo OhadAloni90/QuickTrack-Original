@@ -15,7 +15,7 @@ export async function updateProductRecommended(req: Request, res: Response) {
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
-    const newRecommendedStatus = !product.recommended;
+    const newRecommendedStatus = !product["recommended"];
     await db.collection('products').updateOne(
       { _id: new ObjectId(id) },
       { $set: { recommended: newRecommendedStatus } }
