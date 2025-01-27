@@ -17,8 +17,7 @@ export class SharedInputComponent implements OnInit {
     // Initial load should not show error messages
   }
 
-  onInputChange(value: string) {
-    this.inputText = value;
+  onInputChange() {
     this.inputTextChange.emit(this.inputText);
     this.errMsgs = []; // Clear previous errors
     if (!this.inputText) {
