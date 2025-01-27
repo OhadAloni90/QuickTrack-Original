@@ -1,4 +1,4 @@
-{
+snipp{
   "DB_URI": "mongodb://localhost:27017/devdb",
   "USERNAME": "devUser",
   "PASSWORD": "devPassword",
