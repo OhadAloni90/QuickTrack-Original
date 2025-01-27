@@ -18,6 +18,10 @@ export class ApiService {
   getUserSettings(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/settings/${id}`);
   }
+  updateUserSettings(id: string, settings: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/users/settings/${id}`, settings);
+  }
+  
   getItems(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/items/list/${id}`); // example endpoint
   }

@@ -40,7 +40,27 @@ export async function getUserSettings(req: Request, res: Response) {
   }
 }
 
-// PUT /api/users/settings
+export async function updateUserSettings(req: Request, res: Response) {
+  try {
+    const db = getDb();
+    const userId = req.params.id;
+    const newSettings = req.body; // Validate and sanitize as needed
+
+    const result = await db.collection('users').updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { settings: newSettings } }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('[updateUserSettings]', error);
+    res.status(500).json({ error: 'Failed to update settings' });
+  }
+}
 
 /**
  * POST /api/users
