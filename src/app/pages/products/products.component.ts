@@ -17,7 +17,7 @@ export class ProductsComponent implements OnInit {
   initProducts() {
     this.api.getAllProducts().subscribe((data: any) => {
       console.log('a',data)
-      this.products = data.items;
+      this.products = data.items.map((item: any) => ({ ...item, id: item._id }));
     })
   }
 }

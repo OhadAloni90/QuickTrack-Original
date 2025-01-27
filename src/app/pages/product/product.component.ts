@@ -13,7 +13,7 @@ export class ProductComponent {
 
   toggleRecommended() {
     const newRecommendedStatus = !this.product.recommended;
-    this.apiService.toggleProductRecommended(this.product.id, newRecommendedStatus).subscribe({
+    this.apiService.toggleProductRecommended(this.product._id, newRecommendedStatus).subscribe({
       next: () => {
         this.product.recommended = newRecommendedStatus;
       },
