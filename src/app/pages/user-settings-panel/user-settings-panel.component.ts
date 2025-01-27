@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '../../store/index';
+import { Store } from '@ngrx/store';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { setDarkMode, toggleDarkMode } from 'src/app/store/theme.actions';
