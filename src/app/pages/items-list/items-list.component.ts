@@ -22,17 +22,9 @@ export class ItemsListComponent implements OnInit {
       error: (err: any) => this.error = 'Failed to load items'
     });
     this.searchTerm.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(term => this.api.searchItems(term))
-    ).subscribe({
-      next: (results: any) => this.items = results.items,
-      error: (err: any) => this.error = 'Failed to search items'
-    });
-    this.searchTerm.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
       filter((term): term is string => term !== null),
+      debounceTime(300),
+      distinctUntilChanged(),
       switchMap(term => this.api.searchItems(term))
     ).subscribe({
       next: (results: any) => { this.items = results.items; },
