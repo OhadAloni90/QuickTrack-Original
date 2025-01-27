@@ -43,7 +43,7 @@ export async function getUserSettings(req: Request, res: Response) {
 export async function updateUserSettings(req: Request, res: Response) {
   try {
     const db = getDb();
-    const userId = req.params.id;
+    const userId = req.params['id'];
     const newSettings = req.body; // Validate and sanitize as needed
 
     const result = await db.collection('users').updateOne(
