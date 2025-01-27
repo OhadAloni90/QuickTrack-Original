@@ -1,6 +1,6 @@
 <div class="container">
   <div class="text text_4 pre-text" *ngIf="showPreText" >{{preText}}</div>
-  <input [(ngModel)]="inputText" class="input">
+  <input [(ngModel)]="inputText" (ngModelChange)="onInputChange()" class="input">
   <div *ngFor="let msg of errMsgs" class="error-message">
     {{ msg }}
   </div>
