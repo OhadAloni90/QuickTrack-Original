@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-import { connectToDatabase, getDb, closeDatabaseConnection } from '../config/dbConnection';
+import { connectToDatabase, getDb, closeDatabaseConnection } from '../backend/config/dbConnection';
 import { ObjectId, Collection } from 'mongodb';
 
 async function migrateItems() {
