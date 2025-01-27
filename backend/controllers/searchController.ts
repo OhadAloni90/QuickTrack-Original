@@ -34,6 +34,6 @@ export async function searchItems(req: Request, res: Response) {
     return res.json({ items, totalCount });
   } catch (err) {
     console.error('[searchItems]', err);
-    res.status(500).json({ error: 'Failed to search items' });
+    return res.status(500).json({ error: 'Failed to search items' });
   }
 }

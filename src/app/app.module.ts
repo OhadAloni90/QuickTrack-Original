@@ -12,6 +12,7 @@ import { AddItemComponent } from './pages/add-item/add-item.component';
 import { SharedInputComponent } from './shared/components/shared-input/shared-input.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductsComponent } from './pages/products/products.component';
     AddItemComponent,
     EditUserComponent,
     SharedInputComponent,
-    ProductsComponent
+    ProductsComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,

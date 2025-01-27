@@ -11,8 +11,8 @@ export class SearchPageComponent implements OnInit {
   // State variables
   categories: string[] = ['electronics', 'books', 'clothing']; // Example categories
   selectedCategory: string = '';
-  priceMin: number | null = null;
-  priceMax: number | null = null;
+  priceMin: number = 0;
+  priceMax: number = 0;
   searchText: string = '';
   items: any[] = [];
   totalCount: number = 0;
