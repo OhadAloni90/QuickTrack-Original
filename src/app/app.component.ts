@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     const userId = this.auth.getUserId();
     if (userId) {
       this.api.getUserSettings(userId).subscribe((data: any) => {
-        const theme = data.settings.theme;
+        const theme = data.settings.settings.theme;
         if (theme === 'dark') {
           this.renderer.addClass(document.body, 'dark-mode');
         } else {
