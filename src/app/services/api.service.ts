@@ -34,7 +34,8 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/products`);
   }
   
-  searchItems(term: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/items/search`, { params: new HttpParams().set('q', term) });
+  searchItems(term: string | null): Observable<any> {
+    const params = term ? new HttpParams().set('q', term) : new HttpParams();
+    return this.http.get(`${this.baseUrl}/items/search`, { params });
   }
 }

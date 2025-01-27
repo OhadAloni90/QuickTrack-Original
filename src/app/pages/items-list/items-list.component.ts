@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -12,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ItemsListComponent implements OnInit {
   items: any[] = [];
   error: string | null = null;
-  searchTerm = new FormControl('');
+  searchTerm = new FormControl<string | null>('');
   constructor(private api: ApiService, private auth: AuthService) {}
 
   ngOnInit() {
@@ -28,6 +30,15 @@ export class ItemsListComponent implements OnInit {
     ).subscribe({
       next: (results: any) => this.items = results.items,
       error: (err: any) => this.error = 'Failed to search items'
+    });
+    this.searchTerm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      filter((term): term is string => term !== null),
+      switchMap(term => this.api.searchItems(term))
+    ).subscribe({
+      next: (results: any) => { this.items = results.items; },
+      error: (err: any) => { this.error = 'Failed to search items'; }
     });
   }
 }
