@@ -1,4 +1,4 @@
-# frontend/.dockerignore
+I# frontend/.dockerignore
 
 # Node modules directory
 node_modules/
