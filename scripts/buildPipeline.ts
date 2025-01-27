@@ -28,7 +28,7 @@ function isBuildNecessary(): boolean {
 // Run build if necessary
 if (isBuildNecessary()) {
   console.log('Building Angular project...');
-  exec('npm run build', { cwd: path.join(__dirname, '../frontend') }, (error, stdout, stderr) => {
+  exec('npm run build', { cwd: path.join(__dirname, '../') }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Build error: ${stderr}`);
       process.exit(1);
