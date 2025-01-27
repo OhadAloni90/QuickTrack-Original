@@ -1,5 +1,3 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
 import { MongoClient, Db } from 'mongodb';
 import { getDatabaseConfig } from './configLoader';
 

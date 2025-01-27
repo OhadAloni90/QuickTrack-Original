@@ -1,7 +1,5 @@
 import * as dotenv from 'dotenv';
 
-dotenv.config();
-
 export function getDatabaseConfig() {
   if (!process.env['USERNAME'] || !process.env['PASSWORD']) {
     throw new Error('Missing USERNAME or PASSWORD environment variables.');
