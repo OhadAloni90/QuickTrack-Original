@@ -1,5 +1,5 @@
 import { connectToDatabase, getDb, closeDatabaseConnection } from '../config/dbConnection';
-import { ObjectId } from 'mongodb';
+import { ObjectId, Collection } from 'mongodb';
 
 async function migrateItems() {
   try {
@@ -40,7 +40,7 @@ async function migrateItems() {
   }
 }
 
-async function processBatch(batch, usersCollection, itemsCollection) {
+async function processBatch(batch: any[], usersCollection: Collection, itemsCollection: Collection) {
   const bulkOps = [];
 
   for (const item of batch) {
