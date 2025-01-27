@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { MongoClient, Db } from 'mongodb';
 import { getDatabaseConfig } from './configLoader';
 
@@ -10,6 +12,9 @@ let db: Db;
  */
 export async function connectToDatabase(): Promise<Db> {
   const { uri, dbName } = getDatabaseConfig();
+  if (!process.env['USERNAME'] || !process.env['PASSWORD']) {
+    throw new Error('Missing USERNAME or PASSWORD environment variables.');
+  }
   console.log('Connected to MongoDB:', uri);
   client = new MongoClient(uri as string);
   await client.connect();

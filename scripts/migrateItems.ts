@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { connectToDatabase, getDb, closeDatabaseConnection } from '../config/dbConnection';
 import { ObjectId, Collection } from 'mongodb';
 
