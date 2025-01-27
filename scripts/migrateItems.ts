@@ -1,5 +1,7 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
+import * as path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import { connectToDatabase, getDb, closeDatabaseConnection } from '../backend/config/dbConnection';
 import { ObjectId, Collection } from 'mongodb';
 
