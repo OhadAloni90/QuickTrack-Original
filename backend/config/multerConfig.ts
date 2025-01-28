@@ -4,10 +4,10 @@ import { Request } from 'express';
 
 // Define storage options
 const storage = multer.diskStorage({
-  destination: function (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) {
+  destination: function (req: Request, file: multer.File, cb: (error: Error | null, destination: string) => void) {
     cb(null, 'uploads/'); // Set the destination directory for uploads
   },
-  filename: function (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) {
+  filename: function (req: Request, file: multer.File, cb: (error: Error | null, filename: string) => void) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)); // Ensure unique filenames
   }
