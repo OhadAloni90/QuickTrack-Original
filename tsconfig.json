@@ -23,6 +23,7 @@
     ],
     "module": "CommonJS",
     "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./types"],
     "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": "src"

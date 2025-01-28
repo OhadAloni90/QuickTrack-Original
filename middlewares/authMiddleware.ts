@@ -5,7 +5,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
   const decoded = { role: 'viewer' }; // This is a placeholder for actual decoding logic
 
   // Assign the decoded role to req.user
-  req.user = { role: decoded.role };
+  req.user = { role: decoded.role as 'admin' | 'editor' | 'viewer' };
 
   // Proceed to the next middleware
   next();
