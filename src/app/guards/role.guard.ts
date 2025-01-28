@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const requiredRole = next.data.requiredRole;
+    const requiredRole = next.data['requiredRole'];
     const currentUserRole = this.authService.getRole();
 
     if (currentUserRole && this.isRoleSufficient(currentUserRole, requiredRole)) {
@@ -25,6 +25,6 @@ export class RoleGuard implements CanActivate {
 
   private isRoleSufficient(userRole: string, requiredRole: string): boolean {
     const roleHierarchy = { 'viewer': 1, 'editor': 2, 'admin': 3 };
-    return roleHierarchy[userRole] >= roleHierarchy[requiredRole];
+    return roleHierarchy[userRole as keyof typeof roleHierarchy] >= roleHierarchy[requiredRole as keyof typeof roleHierarchy];
   }
 }

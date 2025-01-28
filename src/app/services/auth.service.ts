@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
+  public currentUser: any;
+
   constructor() {}
 
   // Store user data (ID, token, etc.) in localStorage or a BehaviorSubject
@@ -15,6 +17,7 @@ export class AuthService {
     if (userData.role) {
       localStorage.setItem('role', userData.role);
     }
+    this.currentUser = { userId: userData.userId, role: userData.role };
   }
   getUserId(): string | null {
     return localStorage.getItem('userId');

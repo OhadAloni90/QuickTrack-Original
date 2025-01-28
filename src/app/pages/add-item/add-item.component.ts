@@ -16,7 +16,7 @@ export class AddItemComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   userId: string | null = '';
-  constructor(private api: ApiService, private auth: AuthService) { }
+  constructor(private api: ApiService, public auth: AuthService) { }
 
   ngOnInit() {
     this.userId = this.auth.getUserId();
@@ -41,4 +41,3 @@ export class AddItemComponent implements OnInit {
     });
   }
 }
-

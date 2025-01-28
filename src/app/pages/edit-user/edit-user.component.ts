@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EditUserComponent implements OnInit {
    username: string = '';
-  constructor(private api: ApiService, private auth: AuthService) { }
+  constructor(private api: ApiService, public authService: AuthService) { }
 
   ngOnInit() {
     this.api.getUserSettings(this.auth.getUserId() as string).subscribe((data: any) => {

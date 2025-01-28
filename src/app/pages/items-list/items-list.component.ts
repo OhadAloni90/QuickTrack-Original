@@ -11,7 +11,7 @@ export class ItemsListComponent implements OnInit {
   items: any[] = [];
   error: string | null = null;
   searchTerm: string = '';
-  constructor(private api: ApiService, private auth: AuthService) {}
+  constructor(private api: ApiService, public auth: AuthService) {}
 
   ngOnInit() {
     const id = this.auth.getUserId();

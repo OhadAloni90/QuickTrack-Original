@@ -20,7 +20,7 @@ export async function loginUser(req: Request, res: Response) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
     // 4) Return success + maybe a token
-    return res.json({ success: true, userId: user._id, role: user.role, message: 'Logged in' });
+    return res.json({ success: true, userId: user._id, role: user['role'], message: 'Logged in' });
   } catch (error) {
     console.error('[loginUser]', error);
     return res.status(500).json({ error: 'Failed to log in' });
