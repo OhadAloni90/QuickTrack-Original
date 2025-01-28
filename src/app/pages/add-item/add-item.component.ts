@@ -16,10 +16,10 @@ export class AddItemComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   userId: string | null = '';
-  constructor(private api: ApiService, public auth: AuthService) { }
+  constructor(private api: ApiService, public authService: AuthService) { }
 
   ngOnInit() {
-    this.userId = this.auth.getUserId();
+    this.userId = this.authService.getUserId();
   }
   onAddItem() {
     // Attach the user’s ID

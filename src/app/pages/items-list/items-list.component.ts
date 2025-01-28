@@ -11,10 +11,10 @@ export class ItemsListComponent implements OnInit {
   items: any[] = [];
   error: string | null = null;
   searchTerm: string = '';
-  constructor(private api: ApiService, public auth: AuthService) {}
+  constructor(private api: ApiService, public authService: AuthService) {}
 
   ngOnInit() {
-    const id = this.auth.getUserId();
+    const id = this.authService.getUserId();
     if(id) this.api.getAllItems().subscribe({
       next: (data: any) => this.items = data?.items || [],
       error: (err: any) => this.error = 'Failed to load items'

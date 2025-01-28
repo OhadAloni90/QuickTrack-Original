@@ -12,7 +12,7 @@ export class EditUserComponent implements OnInit {
   constructor(private api: ApiService, public authService: AuthService) { }
 
   ngOnInit() {
-    this.api.getUserSettings(this.auth.getUserId() as string).subscribe((data: any) => {
+    this.api.getUserSettings(this.authService.getUserId() as string).subscribe((data: any) => {
       if(data) this.username = data?.settings?.username;
     })
   }

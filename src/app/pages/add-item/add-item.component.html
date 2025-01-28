@@ -3,7 +3,7 @@
 <div *ngIf="successMessage" style="color:green">{{ successMessage }}</div>
 <div *ngIf="errorMessage" style="color:red">{{ errorMessage }}</div>
 
-<div *ngIf="auth.currentUser?.role !== 'viewer'">
+<div *ngIf="authService.currentUser?.role !== 'viewer'">
   <form (ngSubmit)="onAddItem()">
   <div>
     <label>Name:
