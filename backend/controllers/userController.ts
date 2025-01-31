@@ -134,6 +134,8 @@ export async function updateUserRole(req: Request, res: Response) {
     return res.status(500).json({ error: 'Failed to update user role' });
   }
 }
+
+export async function deleteUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const db = getDb();
