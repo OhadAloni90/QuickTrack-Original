@@ -18,6 +18,9 @@ export class ApiService {
   getUserSettings(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/settings/${id}`);
   }
+  getUser(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/${id}`);
+  }
   getItems(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/items/list/${id}`); // example endpoint
   }
