@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/dbConnection';
+
+interface User {
+  _id: ObjectId;
+  items: any[];
+  // Include other properties as needed
+}
+
 /**
  * GET /api/users
  * Fetch all users from the 'users' collection.
@@ -27,7 +34,7 @@ export async function getUserSettings(req: Request, res: Response) {
       return res.status(400).json({ error: 'Invalid user ID format' });
     }
     const db = getDb();
-    const user = await db.collection('users').findOne({ _id: new ObjectId(id) });
+    const user = await db.collection('users').findOne({ _id: new ObjectId(id) }) as User;
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -74,7 +81,7 @@ export async function getUserById(req: Request, res: Response) {
 
     // 2) Fetch from DB
     const db = getDb();
-    const user = await db.collection('users').findOne({ _id: new ObjectId(id) });
+    const user = await db.collection('users').findOne({ _id: new ObjectId(id) }) as User;
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
       // return here too
@@ -107,7 +114,7 @@ export async function addItemToUser(req: Request, res: Response) {
     }
 
     const db = getDb();
-    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }) as User;
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
