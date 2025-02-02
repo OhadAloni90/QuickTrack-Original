@@ -12,19 +12,28 @@ export class UserSettingsPanelComponent implements OnInit {
 
   settings: any = null;
   error: string | null = null;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
   selectedUserId: string = '';
   newRole: string = '';
-  constructor(private api: ApiService, public authService: AuthService) {}
+  constructor(private apiService: ApiService, public authService: AuthService) {}
   ngOnInit() {
     const id = this.authService.getUserId();
-   if(id) this.api.getUserSettings(id).subscribe({
+   if(id) this.apiService.getUserSettings(id).subscribe({
       next: (data: any) => this.settings = data.settings,
       error: (err: any) => this.error = 'Failed to load user settings'
     });
   }
   onChangeUserRole() {
-    // Logic to handle role change
-    console.log(`Changing role for user ID: ${this.selectedUserId} to new role: ${this.newRole}`);
-    // Implement the actual role change logic here
+    this.apiService.updateUserRole(this.selectedUserId, this.newRole).subscribe({
+      next: (response) => {
+        this.successMessage = 'User role updated successfully.';
+        this.errorMessage = null;
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to update user role.';
+        this.successMessage = null;
+      }
+    });
   }
 }

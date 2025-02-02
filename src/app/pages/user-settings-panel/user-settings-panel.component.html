@@ -3,6 +3,8 @@
   {{ error }}
 </div>
 
+<div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 <div *ngIf="settings">
   <div class="container">
     <div class="theme">

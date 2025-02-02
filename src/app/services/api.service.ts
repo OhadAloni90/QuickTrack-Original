@@ -33,5 +33,8 @@ export class ApiService {
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+  updateUserRole(userId: string, newRole: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/users/${userId}/role`, { newRole });
+  }
   // ... more methods as needed
 }
