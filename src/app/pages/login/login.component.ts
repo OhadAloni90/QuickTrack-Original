@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
         // resp might look like { success: true, userId: "...", token: "...", message: "..."}
         if (resp.success) {
           // store user data
-          this.auth.setUserData({ userId: resp.userId, token: resp.token });
+          this.auth.setUserData({ userId: resp.userId, token: resp.token, role: resp.role });
           this.successMessage = 'Logged in successfully!';
           // do any post-login navigation or calls
         }

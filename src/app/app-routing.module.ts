@@ -8,8 +8,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'users-settings', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'register', component: RegistrationFormComponent },
   { path: 'users-settings', component: UserSettingsPanelComponent, canActivate: [RoleGuard], data: { requiredRole: 'viewer' } },
   { path: 'users-settings/edit', component: EditUserComponent, canActivate: [RoleGuard], data: { requiredRole: 'admin' } },
@@ -17,8 +18,9 @@ const routes: Routes = [
   { path: 'add-item', component: AddItemComponent, canActivate: [RoleGuard], data: { requiredRole: 'editor' } },
   { path: 'products', component: ProductsComponent, canActivate: [RoleGuard], data: { requiredRole: 'viewer' } },
   { path: 'login', component: LoginComponent },
+  { path: 'not-authorized', component: NotAuthorizedComponent },
   // Wildcard fallback:
-  { path: '**', redirectTo: 'users-settings' }
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

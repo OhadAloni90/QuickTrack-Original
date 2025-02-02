@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
     if (currentUserRole && this.isRoleSufficient(currentUserRole, requiredRole)) {
       return true;
     } else {
-      this.router.navigate(['/not-authorized']);
+      this.router.navigate(['/login']);
       return false;
     }
   }
