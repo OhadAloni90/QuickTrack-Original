@@ -1,0 +1,22 @@
+{
+  "name": "quick-track-backend",
+  "version": "1.0.0",
+  "description": "Backend for QuickTrack application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.9.2",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.0"
+  },
+  "author": "Ohad Aloni",
+  "license": "ISC"
+}

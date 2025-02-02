@@ -9,7 +9,7 @@ export class AuthService {
   constructor() {}
 
   // Store user data (ID, token, etc.) in localStorage or a BehaviorSubject
-  setUserData(userData: { userId: string; token?: string; role?: string; role?: string }) {
+  setUserData(userData: { userId: string; token?: string; role?: string }) {
     localStorage.setItem('userId', userData.userId);
     if (userData.token) {
       localStorage.setItem('token', userData.token);
