@@ -1,6 +1,7 @@
 // controllers/authController.ts
 import { Request, Response } from 'express';
 import { getDb } from '../config/dbConnection';
+import jwt from 'jsonwebtoken';
 
 export async function loginUser(req: Request, res: Response) {
   try {
@@ -19,8 +20,11 @@ export async function loginUser(req: Request, res: Response) {
     if (user['password'] !== password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    // 4) Return success + maybe a token
-    return res.json({ success: true, userId: user._id, role: user['role'], message: 'Logged in' });
+    // 4) Generate JWT token
+    const token = jwt.sign({ userId: user._id, role: user['role'] }, 'your_jwt_secret', { expiresIn: '1h' });
+
+    // 5) Return success and token
+    return res.json({ success: true, userId: user._id, role: user['role'], token, message: 'Logged in' });
   } catch (error) {
     console.error('[loginUser]', error);
     return res.status(500).json({ error: 'Failed to log in' });

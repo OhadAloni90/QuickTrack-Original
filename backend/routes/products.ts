@@ -5,16 +5,17 @@ import {
   getAllProducts
 } from '../controllers/productController';
 import { checkRole } from '../middlewares/roleMiddleware';
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 export const productsRouter = Router();
 
 productsRouter.post('/new-product', createProduct);
 productsRouter.get('/', getAllProducts);
 
-productsRouter.put('/:id', checkRole('editor'), (req, res) => {
+productsRouter.put('/:id', authMiddleware, checkRole('editor'), (req, res) => {
   // Logic for updating a product
 });
 
-productsRouter.delete('/:id', checkRole('editor'), (req, res) => {
+productsRouter.delete('/:id', authMiddleware, checkRole('editor'), (req, res) => {
   // Logic for deleting a product
 });

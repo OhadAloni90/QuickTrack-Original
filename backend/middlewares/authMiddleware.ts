@@ -8,8 +8,8 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_secret_key');
-    req.user = { role: decoded.role as 'admin' | 'editor' | 'viewer' };
+    const decoded = jwt.verify(token, 'your_secret_key') as { userId: string, role: 'admin' | 'editor' | 'viewer' };
+    req.user = { userId: decoded.userId, role: decoded.role };
     next();
   } catch (error) {
     return res.status(403).json({ error: 'Failed to authenticate token' });

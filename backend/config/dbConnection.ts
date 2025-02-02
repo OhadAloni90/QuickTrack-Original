@@ -50,9 +50,9 @@ export async function seedUsers() {
     // 2) Insert some fake users
     // You can use static data or a library like Faker.js
     const seedData = [
-      { username: 'Alice', email: 'alice@example.com', role: 'admin' },
-      { username: 'Bob', email: 'bob@example.com', role: 'editor' },
-      { username: 'Carol', email: 'carol@example.com', role: 'viewer' },
+      { username: 'Alice', email: 'alice@example.com', role: 'admin', password: 'password123' },
+      { username: 'Bob', email: 'bob@example.com', role: 'editor', password: 'password123' },
+      { username: 'Carol', email: 'carol@example.com', role: 'viewer', password: 'password123' },
     ];
 
     // Clear existing collection (optional)
